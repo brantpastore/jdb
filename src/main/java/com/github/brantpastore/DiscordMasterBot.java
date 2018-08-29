@@ -7,22 +7,19 @@
  */
 package com.github.brantpastore;
 
+import com.github.brantpastore.util.Database;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Message;
-import com.github.brantpastore.util.Database;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
-import java.sql.SQLOutput;
 
 public class DiscordMasterBot {
     private static JDA jda = null;
     private static JDABuilder jdaBuilder = null;
     private static Database database = null;
     private static Settings settings = new Settings();
-    private static MessageHandler msgHandler = new MessageHandler();
+    private static ChannelMessageHandler msgHandler = new ChannelMessageHandler();
 
     public static void login() {
         try {
