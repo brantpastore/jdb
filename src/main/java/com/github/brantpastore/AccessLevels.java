@@ -62,7 +62,7 @@ public class AccessLevels {
      *      This is a string containing the username of the account we need
      * @return
      */
-    public static String getUID(String u) {
+    public static String getUID(String u) throws SQLException {
         ResultSet res = null;
         try (PreparedStatement stmt = Database.getInstance().getStatement(GET_UID)) {
             stmt.setString(1, u);
@@ -86,7 +86,7 @@ public class AccessLevels {
      * @param u
      * @return
      */
-    public static String getAccessLevel(String u) {
+    public static String getAccessLevel(String u) throws SQLException {
         ResultSet r = null;
         try {
             PreparedStatement stmt = Database.getInstance().getStatement(GET_LEVEL);

@@ -11,6 +11,7 @@ import com.github.brantpastore.util.Database;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Game;
 
 import javax.security.auth.login.LoginException;
 
@@ -25,6 +26,7 @@ public class DiscordMasterBot {
         try {
             jda = new JDABuilder(AccountType.BOT).setToken(settings.getToken()).buildBlocking();
             Database.getInstance();
+            jda.getPresence().setGame(Game.playing("Some game, dude"));
             System.out.println("Logged in!");
             System.out.println("You can add this bot to your server with the url " + Settings.getAuthURL());
         } catch (LoginException e) {
