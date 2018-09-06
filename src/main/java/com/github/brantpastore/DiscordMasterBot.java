@@ -26,7 +26,7 @@ public class DiscordMasterBot {
         try {
             jda = new JDABuilder(AccountType.BOT).setToken(settings.getToken()).buildBlocking();
             Database.getInstance();
-            jda.getPresence().setGame(Game.playing("Some game, dude"));
+            jda.getPresence().setGame(Game.playing("despacito"));
             System.out.println("Logged in!");
             System.out.println("You can add this bot to your server with the url " + Settings.getAuthURL());
         } catch (LoginException e) {
@@ -37,6 +37,9 @@ public class DiscordMasterBot {
             e.getMessage();
         }
     }
+
+    public static JDA getJDA() { return jda; }
+
     public static void main(String[] args) {
         login();
         jda.addEventListener(msgHandler);

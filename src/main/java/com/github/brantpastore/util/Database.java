@@ -29,6 +29,10 @@ public class Database
 
     public enum dbInfo
     {
+        /*
+        TODO:
+        retrieve this information from a file instead of hard-coding it.
+         */
         driver("com.mysql.cj.jdbc.Driver"),
         host("jdbc:mysql://localhost:3306/"),
         db("wowee"),
