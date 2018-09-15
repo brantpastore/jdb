@@ -18,43 +18,16 @@ import com.github.brantpastore.AccessLevels;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.Map;
 
-public class Database
-{
-    private static final String url = "jdbc:mysql://localhost:3306/";
-    private static final String db = "wowee";
-    private static final String user = "root";
-    private static final String password = "Ninja2rk3wl!";
+public class Database {
     private static final String dbString = "[Database][MySQL]: ";
-
-    public enum dbInfo
-    {
-        /*
-        TODO:
-        retrieve this information from a file instead of hard-coding it.
-         */
-        driver("com.mysql.cj.jdbc.Driver"),
-        host("jdbc:mysql://localhost:3306/"),
-        db("wowee"),
-        user("root"),
-        password("Ninja2rk3wl!");
-
-        private final String info;
-
-        dbInfo(final String info) {
-            this.info = info;
-        }
-
-        @Override
-        public String toString() {
-            return info;
-        }
-    }
 
     private static Database instance;
 
     private static Connection conn;
     private HashMap<String, PreparedStatement> preparedStatements;
+    public Map<Enum, String> dbConnInfo;
 
     public static Database getInstance() {
             if (instance == null)
@@ -62,7 +35,7 @@ public class Database
         return instance;
     }
 
-    public static Connection getConnection()
+    public Connection getConnection()
     {
         try {
             if (conn.isClosed())
@@ -73,11 +46,12 @@ public class Database
         return conn;
     }
 
-    public static Connection setupConnection()
+    public Connection setupConnection()
     {
         try {
-            Class.forName(dbInfo.driver.toString());
-            conn = DriverManager.getConnection(dbInfo.host.toString() + dbInfo.db.toString(), dbInfo.user.toString(), dbInfo.password.toString());
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(dbConnInfo.get(dbInfo.host) + dbConnInfo.get(dbInfo.port) + dbConnInfo.get(dbInfo.dbname) + "?" + "user=" + dbConnInfo.get(dbInfo.user) + "&password=" + dbConnInfo.get(dbInfo.password));
+            System.out.println(dbConnInfo.get(dbInfo.host) + dbConnInfo.get(dbInfo.port) + dbConnInfo.get(dbInfo.dbname) + "?" + "user=" + dbConnInfo.get(dbInfo.user) + "&password=" + dbConnInfo.get(dbInfo.password));
             System.out.println(dbString + "Connection Successful!");
         } catch (ClassNotFoundException e) {
             System.out.println(dbString + "Error establishing connection!");
@@ -96,6 +70,9 @@ public class Database
     private Database()
     {
         preparedStatements = new HashMap<String, PreparedStatement>();
+        dbConnInfo = new HashMap<Enum, String>();
+        dbConnInfo.putAll(FileManager.getdbMap());
+
         try {
             setupConnection();
 
